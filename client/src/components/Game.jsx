@@ -1,17 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Registration from './Registration';
+import StateMonitor from './StateMonitor';
 import * as actionCreators from '../action_creators';
-
 
 export const Game = React.createClass({
 
     render: function() {
+
+        const monitor =  <div><StateMonitor {...this.props} /></div>;
+
         switch (this.props.gamestate) {
             case 'registering_players':
-                return <div><Registration {...this.props} /></div>;
+                return monitor + <div><Registration {...this.props} /></div>;
             case 'uninitialized':
-                return <div><Registration {...this.props} /></div>;
+                return monitor + <div><Registration {...this.props} /></div>;
             case 'strategy':
             case 'lobby':
             case 'r1':

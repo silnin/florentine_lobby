@@ -4,10 +4,10 @@ export function initServer() {
     };
 }
 
-export function register(state, player) {
+export function register(playername) {
     return {
         meta: {remote: true},
         type: 'REGISTER',
-        player: player
+        player: playername
     };
 }

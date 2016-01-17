@@ -4,6 +4,6 @@ import {startServer} from './src/server';
 export const store = makeStore();
 startServer(store);
 
-store.dispatch({
-    type: 'INIT_SERVER',
-});
+//store.dispatch({
+//    type: 'INIT_SERVER',
+//});

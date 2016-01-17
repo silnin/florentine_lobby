@@ -5,11 +5,15 @@ function setState(state, newState) {
 }
 
 export default function(state = Map(), action) {
+    console.log('received ' + action.type);
+
     switch (action.type) {
         case 'INIT_SERVER':
             return initState(state);
         case 'REGISTER':
-            return state;//@todo make registration greyed out, or update game or player state to waiting?
+            //return state.get('players').push(action.player);
+            return state;
+            //return state;//@todo make registration greyed out, or update game or player state to waiting?
     }
     return state;
 }

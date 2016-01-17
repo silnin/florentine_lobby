@@ -1,8 +1,12 @@
 import {List, Map} from 'immutable';
 
-export const INITIAL_STATE = Map();
+export const INITIAL_STATE = initServer();
 
 export function addPlayer(state, player) {
+
+    console.log("addplayer entered");
+
+    //return initializedState.get('players').push(player);
 
     if (!state.get('gamestate') == 'uninitialized' &&
         !state.get('gamestate') == 'registering_players')
@@ -30,7 +34,8 @@ export function setGameState(state, newState)
     return state.set('gamestate', newState);
 }
 
-export function initServer(state) {
+export function initServer(state = Map()) {
+    console.log('initServer much?');
     const initializedState = setGameState(state, 'uninitialized');
     return initPlayers(initializedState);
 }
