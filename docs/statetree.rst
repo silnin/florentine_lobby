@@ -15,8 +15,7 @@ state
 					current
 			state	registered, strategizing, lobbying, election_idle, gonfaloniering, signoriaing, being_a_winner, being_a_loser
 
-	game
-		state	uninitialized, registering_players, strategy, lobby, r1, r2, r3, result
+	gamestate	uninitialized, registering_players, strategy, lobby, r1, r2, r3, result
 
 	lobby
 		state	idle, running

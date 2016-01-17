@@ -1,4 +1,4 @@
-import {addPlayer, initServer} from './core';
+import {addPlayer, initServer, INITIAL_STATE} from './core';
 
 export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {

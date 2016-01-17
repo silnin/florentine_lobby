@@ -8,9 +8,13 @@ Make sure you have nodejs installed.
 * install node modules: npm install
 
 # How to
+
+Both server and clientside services need to ber up and running.
+
   * start server:
     - go to subdir server
     - start: npm run start
 
-
   * start client server:
+    - go to subdir client
+    - start: ./node_modules/.bin/webpack-dev-server
