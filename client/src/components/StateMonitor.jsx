@@ -1,5 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PlayerMonitor from './PlayerMonitor';
 
 export default React.createClass({
     mixins: [PureRenderMixin],
@@ -8,6 +9,8 @@ export default React.createClass({
 
         return <div className="stateMonitor">
             <b>gamestate</b>: {this.props.gamestate} <br />
-        </div>;
-    }
+            <b>PLAYERS</b>: <br />
+            <PlayerMonitor {...this.props} />
+            </div>
+        }
 });

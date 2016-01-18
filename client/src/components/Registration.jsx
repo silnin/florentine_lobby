@@ -18,8 +18,6 @@ export default React.createClass({
             <input type="text" id="playername" />
             <br />
             <input type="button" onClick={this.registerMe} value="Register"/>
-
-            Registered players: {this.props.players}
         </div>;
     }
 });

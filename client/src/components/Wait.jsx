@@ -6,9 +6,8 @@ export default React.createClass({
 
     render: function() {
 
-        return <div className="budgetpool">
-            Budget: {this.props.me.get('score').get('budget')}
+        return <div className="wait">
+            <h3>Please wait until your opponent has registered...</h3>
         </div>;
     }
 });
-

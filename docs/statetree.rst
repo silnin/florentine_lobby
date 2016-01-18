@@ -2,8 +2,9 @@
 
 state
 	players
-		playername
+		[Bob]
 			score
+				budget
 				t1
 					goal
 					current
