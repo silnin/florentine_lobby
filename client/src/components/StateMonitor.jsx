@@ -5,8 +5,9 @@ export default React.createClass({
     mixins: [PureRenderMixin],
 
     render: function() {
+
         return <div className="stateMonitor">
-            state: {this.props.gamestate} <br />
+            <b>gamestate</b>: {this.props.gamestate} <br />
         </div>;
     }
 });

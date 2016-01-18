@@ -8,14 +8,22 @@ export const Game = React.createClass({
 
     render: function() {
 
-        const monitor =  <div><StateMonitor {...this.props} /></div>;
-
         switch (this.props.gamestate) {
             case 'registering_players':
-                return monitor + <div><Registration {...this.props} /></div>;
+                return <div>
+                    <StateMonitor {...this.props} />
+                    <Registration {...this.props} />
+                </div>;
             case 'uninitialized':
-                return monitor + <div><Registration {...this.props} /></div>;
-            case 'strategy':
+                return <div>
+                    <StateMonitor {...this.props} />
+                    <Registration {...this.props} />
+                </div>;
+            case 'strategizing':
+                return <div>
+                    <StateMonitor {...this.props} />
+                    <Strategy {...this.props} />
+                </div>;
             case 'lobby':
             case 'r1':
             case 'r2':

@@ -5,8 +5,9 @@ export default React.createClass({
     mixins: [PureRenderMixin],
 
     registerMe: function() {
-        //console.log("heya, registerMe");
-        this.props.register('blaat');
+        const name = document.getElementById("playername").value;
+        console.log("heya, registerMe " + name );
+        this.props.register(name);
     },
 
     render: function() {
@@ -16,10 +17,7 @@ export default React.createClass({
             <h1>Name:</h1>
             <input type="text" id="playername" />
             <br />
-            <button
-                onClick={this.registerMe()}>
-            Register
-            </button>
+            <input type="button" onClick={this.registerMe} value="Register"/>
 
             Registered players: {this.props.players}
         </div>;

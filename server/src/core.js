@@ -4,14 +4,15 @@ export const INITIAL_STATE = initServer();
 
 export function addPlayer(state, player) {
 
-    console.log("addplayer entered");
+    console.log("addplayer entered for " + player);
 
     //return initializedState.get('players').push(player);
 
-    if (!state.get('gamestate') == 'uninitialized' &&
-        !state.get('gamestate') == 'registering_players')
+    if (state.get('gamestate') != 'uninitialized' &&
+        state.get('gamestate') != 'registering_players')
     {
         // cant add more players right now
+        console.log('state is not valid for registering more players (' + state.get('gamestate') + ')');
         return state;
     }
 
@@ -31,6 +32,7 @@ export function addPlayer(state, player) {
 
 export function setGameState(state, newState)
 {
+    console.log('setting state to ' + newState);
     return state.set('gamestate', newState);
 }
 

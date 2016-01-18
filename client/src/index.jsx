@@ -5,7 +5,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import io from 'socket.io-client';
 import reducer from './reducer';
-import {initServer} from './action_creators';
+import {setState} from './action_creators';
 import remoteActionMiddleware from './remote_action_middleware';
 import App from './components/App';
 import {GameContainer} from './components/Game';
@@ -19,7 +19,7 @@ const createStoreWithMiddleware = applyMiddleware(
 const store = createStoreWithMiddleware(reducer);
 
 socket.on('state', state =>
-        store.dispatch(initServer(state))
+        store.dispatch(setState(state))
 );
 
 const routes = <Route component={App}>
