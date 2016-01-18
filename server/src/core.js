@@ -59,18 +59,52 @@ export function decreaseTargetGoal(state, player, target) {
         const nextState = state.updateIn(
             ['players', player, 'score', 'budget'],
             0,
-                budget => budget + 1
+            budget => budget + 1
         );
 
         return nextState.updateIn(
             ['players', player, 'score', target, 'goal'],
             0,
-                goal => goal - 1
+            goal => goal - 1
         );
 
     } else {
         return state;
     }
+}
+
+export function updatePlayerState(state, player, newPlayerState) {
+    return updateGameStateByPlayerState(state.updateIn(
+        ['players', player, 'state'],
+        0,
+        state => newPlayerState
+    ));
+}
+
+function updateGameStateByPlayerState(state)
+{
+    // check if we are going to election?
+    if (bothPlayersAreOnState(state, 'lobbying')) {
+        // move to election
+        console.log('detected: both players are ready to lobby!');
+        return state.set('gamestate', 'lobby');
+    } else {
+        console.log('players are not on same state')
+        return state;
+    }
+}
+
+function bothPlayersAreOnState(state, playerstate) {
+    state.get('players').forEach(
+        function(player) {
+            if (player.get('state') != playerstate) {
+                return false;
+            }
+        },
+        this
+    );
+
+    return true;
 }
 
 function setGameState(state, newState)

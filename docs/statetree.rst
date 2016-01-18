@@ -14,7 +14,7 @@ state
 				t3
 					goal
 					current
-			state	registered, strategizing, lobbying, election_idle, gonfaloniering, signoriaing, being_a_winner, being_a_loser
+			state	registered, strategizing, wait_for_election, lobbying, election_idle, gonfaloniering, signoriaing, being_a_winner, being_a_loser
 
 	gamestate	uninitialized, registering_players, strategy, lobby, r1, r2, r3, result
 

@@ -7,7 +7,7 @@ export default React.createClass({
     render: function() {
 
         return <div className="wait">
-            <h3>Please wait until your opponent has registered...</h3>
+            <h3>{this.props.reason}</h3>
         </div>;
     }
 });

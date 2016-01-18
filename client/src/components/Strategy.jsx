@@ -6,6 +6,10 @@ import GoalSpinner from './GoalSpinner';
 export default React.createClass({
     mixins: [PureRenderMixin],
 
+    submitStrategy: function() {
+        console.log("heya, update player stateth ");
+        this.props.updatePlayerState(this.props.me.get('name'), 'lobbying');
+    },
     render: function() {
 
         return <div className="strategy">

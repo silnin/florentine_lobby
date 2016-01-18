@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Registration from './Registration';
 import StateMonitor from './StateMonitor';
 import Strategy from './Strategy';
+import Lobby from './Lobby';
 import Wait from './Wait';
 import * as actionCreators from '../action_creators';
 import {getCookie} from '../cookie_actions';
@@ -30,17 +31,41 @@ export const Game = React.createClass({
                     <StateMonitor {...this.props} />
                     <Registration {...this.props} />
                 </div>;
+
             case 'uninitialized':
                 return <div>
                     <StateMonitor {...this.props} />
                     <Registration {...this.props} />
                 </div>;
+
             case 'strategizing':
+                if (this.props.players.has(me)
+                    && this.props.players.get(me).get('state') != 'strategizing') {
+                    // show waiting screen
+                    return <div>
+                        <StateMonitor {...this.props} />
+                        <Wait reason="Wait for opponent to finish his goals..." />
+                    </div>;
+                }
                 return <div>
                     <StateMonitor {...this.props} />
                     <Strategy {...this.props} />
                 </div>;
+
             case 'lobby':
+                if (this.props.players.has(me)
+                    && this.props.players.get(me).get('state') != 'lobbying') {
+                    // show waiting screen
+                    return <div>
+                        <StateMonitor {...this.props} />
+                        <Wait reason="Wait for the election..." />
+                    </div>;
+                }
+                return <div>
+                    <StateMonitor {...this.props} />
+                    <Lobby {...this.props} />
+                </div>;
+
             case 'r1':
             case 'r2':
             case 'r3':

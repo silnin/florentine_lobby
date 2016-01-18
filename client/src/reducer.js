@@ -1,7 +1,7 @@
 import {List, Map} from 'immutable';
 import {setCookie} from './cookie_actions';
 
-export default function(state = initState(), action) {
+export default function(state = initState(), action = null) {
     console.log('received ' + action.type);
 
     switch (action.type) {
@@ -16,6 +16,8 @@ export default function(state = initState(), action) {
         case 'INCREASE_TARGET_GOAL':
             return state;
         case 'DECREASE_TARGET_GOAL':
+            return state;
+        case 'UPDATE_PLAYER_STATE':
             return state;
         default:
             return state;

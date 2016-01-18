@@ -36,3 +36,12 @@ export function decreaseTargetGoal(player, target) {
         target: target
     }
 }
+
+export function updatePlayerState(player, newPlayerState) {
+    return {
+        meta: {remote: true},
+        type: 'UPDATE_PLAYER_STATE',
+        player: player,
+        newPlayerState: newPlayerState
+    }
+}

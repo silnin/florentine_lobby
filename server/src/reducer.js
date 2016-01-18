@@ -1,6 +1,6 @@
-import {addPlayer, increaseTargetGoal, decreaseTargetGoal, initServer, INITIAL_STATE} from './core';
+import {addPlayer, updatePlayerState, increaseTargetGoal, decreaseTargetGoal, initServer, INITIAL_STATE} from './core';
 
-export default function reducer(state = INITIAL_STATE, action) {
+export default function reducer(state = INITIAL_STATE, action = null) {
     switch (action.type) {
         case 'INIT_SERVER':
             return initServer(state);
@@ -10,6 +10,8 @@ export default function reducer(state = INITIAL_STATE, action) {
             return increaseTargetGoal(state, action.player, action.target);
         case 'DECREASE_TARGET_GOAL':
             return decreaseTargetGoal(state, action.player, action.target);
+        case 'UPDATE_PLAYER_STATE':
+            return updatePlayerState(state, action.player, action.newPlayerState);
     }
     return state;
 }
