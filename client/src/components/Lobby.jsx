@@ -8,6 +8,7 @@ export default React.createClass({
         console.log("heya, update lobby yo");
         this.props.updatePlayerState(this.props.me.get('name'), 'wait_for_election');
     },
+
     render: function() {
 
         return <div className="lobby">
@@ -18,7 +19,17 @@ export default React.createClass({
     }
 });
 
-//<BudgetPool {...this.props} />
-//Nobility <GoalSpinner {...this.props} target="t1" targetScore={this.props.me.get('score').get('t1').get('goal')}/>
-//Church <GoalSpinner {...this.props} target="t2" targetScore={this.props.me.get('score').get('t2').get('goal')}/>
-//Common <GoalSpinner {...this.props} target="t3" targetScore={this.props.me.get('score').get('t3').get('goal')}/>
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}

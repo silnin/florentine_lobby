@@ -20,16 +20,15 @@ state
 
 	lobby
 		state	idle, running
-		score
-			t1
-				p1	integer
-				p2	integer
-			t2
-				p1	integer
-				p2	integer
-			t3
-				p1	integer
-				p2	integer
+		t1
+			p1	integer
+			p2	integer
+		t2
+			p1	integer
+			p2	integer
+		t3
+			p1	integer
+			p2	integer
 	gonfaloniere
 		player	player name or unset
 		score

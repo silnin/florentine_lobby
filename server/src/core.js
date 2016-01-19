@@ -2,6 +2,12 @@ import {List, Map} from 'immutable';
 
 export const INITIAL_STATE = initServer();
 
+/**
+ *
+ * @param state
+ * @param player
+ * @returns {*}
+ */
 export function addPlayer(state, player) {
 
     console.log("addplayer entered for " + player);
@@ -30,6 +36,13 @@ export function addPlayer(state, player) {
     }
 }
 
+/**
+ *
+ * @param state
+ * @param player
+ * @param target
+ * @returns {*}
+ */
 export function increaseTargetGoal(state, player, target) {
     if (state.get('players').get(player).get('score').get('budget') > 0) {
 
@@ -53,6 +66,13 @@ export function increaseTargetGoal(state, player, target) {
     }
 }
 
+/**
+ *
+ * @param state
+ * @param player
+ * @param target
+ * @returns {*}
+ */
 export function decreaseTargetGoal(state, player, target) {
     if (state.get('players').get(player).get('score').get(target).get('goal') > 0) {
 
@@ -73,6 +93,13 @@ export function decreaseTargetGoal(state, player, target) {
     }
 }
 
+/**
+ *
+ * @param state
+ * @param player
+ * @param newPlayerState
+ * @returns {*}
+ */
 export function updatePlayerState(state, player, newPlayerState) {
     return updateGameStateByPlayerState(state.updateIn(
         ['players', player, 'state'],
@@ -81,48 +108,112 @@ export function updatePlayerState(state, player, newPlayerState) {
     ));
 }
 
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
 function updateGameStateByPlayerState(state)
 {
     // check if we are going to election?
     if (bothPlayersAreOnState(state, 'lobbying')) {
-        // move to election
         console.log('detected: both players are ready to lobby!');
-        return state.set('gamestate', 'lobby');
+        // set up empty lobby
+        const stateWithLobby = state.set('lobby', initLobby());
+        return stateWithLobby.set('gamestate', 'lobby');
+    } else if (bothPlayersAreOnState(state, 'wait_for_election')) {
+        //@todo instead of only gamestate update, tally the scores and assign the roles
+        const electedState = tallyLobby(state);
+        return electedState.set('gamestate', 'election');
+    } else if (bothPlayersAreOnState(state, 'election_accepted')) {
+        return state.set('gamestate', 'r1');
     } else {
         console.log('players are not on same state')
         return state;
     }
 }
 
-function bothPlayersAreOnState(state, playerstate) {
-    state.get('players').forEach(
-        function(player) {
-            if (player.get('state') != playerstate) {
-                return false;
-            }
-        },
-        this
-    );
-
-    return true;
+function tallyLobby(state)
+{
+    return state;
 }
 
+/**
+ *
+ * @param state
+ * @param playerstate
+ * @returns {boolean}
+ */
+function bothPlayersAreOnState(state, playerstate) {
+
+    if (state.get('players').first().get('state') == playerstate
+        && state.get('players').last().get('state') == playerstate ) {
+        return true;
+    }
+
+    return false;
+}
+
+
+/**
+ *
+ * @param state
+ * @param newState
+ * @returns {*}
+ */
 function setGameState(state, newState)
 {
     console.log('setting state to ' + newState);
     return state.set('gamestate', newState);
 }
 
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
 function initServer(state = Map()) {
     console.log('initServer much?');
     const initializedState = setGameState(state, 'uninitialized');
     return initPlayers(initializedState);
 }
 
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
 function initPlayers(state) {
     return state.set('players', Map());
 }
 
+/**
+ * Create an empty lobby
+ *
+ * @returns Map
+ */
+function initLobby() {
+    return Map({
+        t1: Map({
+            p1: 0,
+            p2: 0
+        }),
+        t2: Map({
+            p1:0,
+            p2:0
+        }),
+        t3: Map({
+            p1:0,
+            p2:0
+        })
+    });
+}
+
+/**
+ *
+ * @param name
+ * @returns {*}
+ */
 function initPlayer(name) {
 
     return Map({
