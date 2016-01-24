@@ -1,4 +1,4 @@
-import {addPlayer, updatePlayerState, increaseTargetGoal, decreaseTargetGoal, initServer, INITIAL_STATE} from './core';
+import {submitLobby, promiseResource, addPlayer, updatePlayerState, increaseTargetGoal, decreaseTargetGoal, initServer, INITIAL_STATE} from './core';
 
 export default function reducer(state = INITIAL_STATE, action = null) {
     switch (action.type) {
@@ -12,6 +12,10 @@ export default function reducer(state = INITIAL_STATE, action = null) {
             return decreaseTargetGoal(state, action.player, action.target);
         case 'UPDATE_PLAYER_STATE':
             return updatePlayerState(state, action.player, action.newPlayerState);
+        case 'PROMISE_RESOURCE':
+            return promiseResource(state, action.playerName, action.resourceValue, action.targetName);
+        case 'SUBMIT_LOBBY':
+            return submitLobby(state, action.playerName);
     }
     return state;
 }

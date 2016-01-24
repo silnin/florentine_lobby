@@ -1,12 +1,13 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import LobbyGroup from './LobbyGroup';
 
 export default React.createClass({
     mixins: [PureRenderMixin],
 
     submitLobby: function() {
-        console.log("heya, update lobby yo");
-        this.props.updatePlayerState(this.props.me.get('name'), 'wait_for_election');
+        console.log("heya, done lobby yo");
+        this.props.submitLobby(this.props.me.get('name'));
     },
 
     render: function() {
@@ -14,22 +15,12 @@ export default React.createClass({
         return <div className="lobby">
             <h1>Lobby your ass off!</h1>
             <h2>Which resources do you promise to which party?</h2>
-            <input type="button" onClick={this.submitLobby} value="finish"/>
+
+            <LobbyGroup promiseResource={this.props.promiseResource} playerName={this.props.me.get('name')} resourceValue="6" img="resources/images/6.png" />
+            <LobbyGroup promiseResource={this.props.promiseResource} playerName={this.props.me.get('name')} resourceValue="2" img="resources/images/2.png" />
+            <LobbyGroup promiseResource={this.props.promiseResource} playerName={this.props.me.get('name')} resourceValue="1" img="resources/images/1.png" />
+
+            <input type="button" onClick={this.submitLobby} value="Register"/>
         </div>;
     }
 });
-
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-}

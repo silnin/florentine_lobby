@@ -19,6 +19,10 @@ export default function(state = initState(), action = null) {
             return state;
         case 'UPDATE_PLAYER_STATE':
             return state;
+        case 'PROMISE_RESOURCE':
+            return state;
+        case 'SUBMIT_LOBBY':
+            return state;
         default:
             return state;
     }
@@ -41,3 +45,5 @@ function initState(state = Map()) {
 function initPlayers(state) {
     return state.set('players', Map());
 }
+
+

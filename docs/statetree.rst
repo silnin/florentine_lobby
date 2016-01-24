@@ -6,29 +6,36 @@ state
 			score
 				budget
 				t1
+				 	reputation
+                	vote
+                	overState
 					goal
 					current
+					promise6
+					promise2
+					promise1
 				t2
+					reputation
+                	vote
+                	overState
 					goal
 					current
+					promise6
+					promise2
+					promise1
 				t3
+					reputation
+                	vote
+                	overState
 					goal
 					current
+					promise6
+					promise2
+					promise1
+
 			state	registered, strategizing, wait_for_election, lobbying, election_idle, gonfaloniering, signoriaing, being_a_winner, being_a_loser
-
+	me - reference to current player
 	gamestate	uninitialized, registering_players, strategy, lobby, r1, r2, r3, result
-
-	lobby
-		state	idle, running
-		t1
-			p1	integer
-			p2	integer
-		t2
-			p1	integer
-			p2	integer
-		t3
-			p1	integer
-			p2	integer
 	gonfaloniere
 		player	player name or unset
 		score
@@ -46,6 +53,9 @@ state
 
 
 
+
+
+
 actions						remote?
 
 register					yes
@@ -56,12 +66,7 @@ strategy_subtract_t2		no
 strategy_add_t3				no
 strategy_subtract_t3		no
 submit_strategy				yes
-lobby_assign_t1				no
-lobby_unassign_t1			no
-lobby_assign_t2				no
-lobby_unassign_t2			no
-lobby_assign_t3				no
-lobby_unassign_t3			no
+promise_resource			yes
 lobby_submit_promises		yes		changes player to election_idle. If all players are election_idle, calculate winners and set election outcome somehow. players are set to gonfaloniering or signoriering
 accept_election				no		begins R1
 gonfaloniere_select_budget	no

@@ -13,6 +13,7 @@ export default React.createClass({
 
         return <div className="lobby">
             <h1>And the Gonfaloniere is....</h1>
+            {this.props.gonfaloniere.get('name')}
             <input type="button" onClick={this.acceptElection} value="accept your term"/>
         </div>;
     }

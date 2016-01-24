@@ -45,3 +45,21 @@ export function updatePlayerState(player, newPlayerState) {
         newPlayerState: newPlayerState
     }
 }
+
+export function promiseResource(playerName, resourceValue, targetName) {
+    return {
+        meta: {remote: true},
+        type: 'PROMISE_RESOURCE',
+        playerName: playerName,
+        resourceValue: resourceValue,
+        targetName: targetName
+    }
+}
+
+export function submitLobby(playerName) {
+    return {
+        meta: {remote: true},
+        type: 'SUBMIT_LOBBY',
+        playerName: playerName
+    }
+}

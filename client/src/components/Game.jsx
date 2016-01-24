@@ -99,7 +99,6 @@ function mapStateToProps(state) {
     return {
         gamestate: state.get('gamestate'),
         players: state.get('players'),
-        lobby: state.get('lobby'),
         gonfaloniere: state.get('gonfaloniere'),
         signoria: state.get('signoria'),
         me: meState
