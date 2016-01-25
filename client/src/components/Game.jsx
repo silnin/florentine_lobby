@@ -5,6 +5,8 @@ import StateMonitor from './StateMonitor';
 import Strategy from './Strategy';
 import Lobby from './Lobby';
 import ElectionResult from './ElectionResult';
+import Gonfaloniere from './Gonfaloniere';
+import Signoria from './Signoria';
 import Wait from './Wait';
 import * as actionCreators from '../action_creators';
 import {getCookie} from '../cookie_actions';
@@ -80,6 +82,25 @@ export const Game = React.createClass({
                     <ElectionResult {...this.props} />
                 </div>;
             case 'r1':
+                if (this.props.players.get(me).get('state') != 'election_accepted') {
+                    // show waiting screen
+                    return <div>
+                        <StateMonitor {...this.props} />
+                        <Wait reason="Wait until everyone has accepted the election..." />
+                    </div>;
+                }
+
+                if (this.props.me.get('name') == this.props.gonfaloniere.get('name')) {
+                    return <div>
+                        <StateMonitor {...this.props} />
+                        <Gonfaloniere {...this.props} />
+                    </div>;
+                }
+
+                return <div>
+                    <StateMonitor {...this.props} />
+                    <Signoria {...this.props} />
+                </div>;
             case 'r2':
             case 'r3':
             case 'result':

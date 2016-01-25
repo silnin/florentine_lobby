@@ -94,13 +94,13 @@ export function decreaseTargetGoal(state, player, target) {
 /**
  *
  * @param state
- * @param player
+ * @param playerName
  * @param newPlayerState
  * @returns {*}
  */
-export function updatePlayerState(state, player, newPlayerState) {
+export function updatePlayerState(state, playerName, newPlayerState) {
     return updateGameStateByPlayerState(state.updateIn(
-        ['players', player, 'state'],
+        ['players', playerName, 'state'],
         0,
         state => newPlayerState
     ));
@@ -120,7 +120,7 @@ function updateGameStateByPlayerState(state)
         return state.set('gamestate', 'lobby');
     } else if (bothPlayersAreOnState(state, 'wait_for_election')) {
         //@todo instead of only gamestate update, tally the scores and assign the roles
-        const electedState = tallyLobby(state);
+        const electedState = tallyLobbyVotes(state);
         return electedState.set('gamestate', 'election');
     } else if (bothPlayersAreOnState(state, 'election_accepted')) {
         return state.set('gamestate', 'r1');
@@ -160,12 +160,16 @@ function electGonfaloniere(state, playerName)
  */
 function determineLobbyWinner(state)
 {
-    const p1Votes = tallyPlayerVotes(state.get('players').first().get('name'));
-    const p2Votes = tallyPlayerVotes(state.get('players').last().get('name'));
+    const p1Votes = tallyPlayerVotes(state, state.get('players').first().get('name'));
+    const p2Votes = tallyPlayerVotes(state, state.get('players').last().get('name'));
+
+    console.log('p1 has ' + p1Votes.toString() + ' votes and p2 has ' + p2Votes.toString() + ' votes!');
 
     if (p1Votes > p2Votes) {
+        console.log('P1 has won!');
         return electGonfaloniere(state, state.get('players').first().get('name'));
     }
+    console.log('P2 has won!');
     return electGonfaloniere(state, state.get('players').last().get('name'));
 }
 
@@ -204,17 +208,23 @@ function tallyTargetFromPlayer(state, playerName, targetName)
  */
 function letTargetVote(state, targetName)
 {
-    switch (compareLobbyTarget(state, state.get('players').first(), state.get('players').last(), targetName))
-    {
+    switch (compareLobbyTarget(state,
+                               state.get('players').first().get('name'),
+                               state.get('players').last().get('name'),
+                               targetName)) {
         case -1:
             // p2 wins
-            return giveVote(state.get('players').last().get('name'), targetName);
-        case 0:
-            // standoff
-            return decideByReputation(state, targetName);
+            console.log(targetName.toString() + ' votes for P2');
+            return giveVote(state, state.get('players').last().get('name'), targetName);
         case 1:
             // p1 wins
-            return giveVote(state.get('players').first().get('name'), targetName);
+            console.log(targetName.toString() + ' votes for P1');
+            return giveVote(state, state.get('players').first().get('name'), targetName);
+        //case 0:
+        default:
+            // standoff
+            console.log(targetName.toString() + ' is undecided on votes');
+            return decideByReputation(state, targetName);
     }
 }
 
@@ -232,11 +242,16 @@ function decideByReputation(state, targetName)
         targetName))
     {
         case -1:
-            return giveVote(state.get('players').first().get('name'), targetName);
-        case 0:
-            // decide randomly
+            console.log(targetName.toString() + ' by reputation chooses p1');
+            return giveVote(state, state.get('players').first().get('name'), targetName);
         case 1:
-            return giveVote(state.get('players').last().get('name'), targetName);
+            console.log(targetName.toString() + ' by reputation chooses p2');
+            return giveVote(state, state.get('players').last().get('name'), targetName);
+        default:
+        //case 0:
+            // decide randomly
+            console.log(targetName.toString() + ' undecided on reputation');
+            return decideRandomly(state, targetName);
     }
 }
 
@@ -251,10 +266,12 @@ function decideRandomly(state, targetName)
     const choice = Math.floor(Math.random() * 2) + 1;
 
     if (choice == 1) {
-        return giveVote(state.get('players').first().get('name'), targetName);
+        console.log(targetName.toString() + ' randomly chooses p1');
+        return giveVote(state, state.get('players').first().get('name'), targetName);
     }
 
-    return giveVote(state.get('players').last().get('name'), targetName);
+    console.log(targetName.toString() + ' randomly chooses p2');
+    return giveVote(state, state.get('players').last().get('name'), targetName);
 }
 
 /**
@@ -486,6 +503,6 @@ export function submitLobby(state, playerName)
 {
     // since we already have the actual state of the lobby,
     // only player update is needed (whiceh in turn might update game state)
-    updatePlayerState(state, playerName, 'wait_for_election');
+    return updatePlayerState(state, playerName, 'wait_for_election');
 }
 

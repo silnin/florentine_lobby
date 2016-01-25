@@ -20,7 +20,7 @@ export default React.createClass({
             <LobbyGroup promiseResource={this.props.promiseResource} playerName={this.props.me.get('name')} resourceValue="2" img="resources/images/2.png" />
             <LobbyGroup promiseResource={this.props.promiseResource} playerName={this.props.me.get('name')} resourceValue="1" img="resources/images/1.png" />
 
-            <input type="button" onClick={this.submitLobby} value="Register"/>
+            <input type="button" onClick={this.submitLobby} value="Finish"/>
         </div>;
     }
 });
